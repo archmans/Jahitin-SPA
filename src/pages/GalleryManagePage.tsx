@@ -16,10 +16,11 @@ const GalleryManagePage: React.FC = () => {
         // For example: fetchGalleryDataFromDatabase();
     }, []);
 
-    const handleEdit = (imageId: string) => {
-        // Logic to handle edit, e.g., redirect to edit page
-        console.log(`Editing image with ID: ${imageId}`);
-    };
+    // const handleEdit = (imageId: string) => {
+    //     // Logic to handle edit, e.g., redirect to edit page
+    //     console.log(`Editing image with ID: ${imageId}`);
+    //     // Navigasi ke halaman edit dengan SPA
+    // };
 
     const handleDelete = (imageId: string) => {
         // Logic to handle delete
@@ -47,9 +48,9 @@ const GalleryManagePage: React.FC = () => {
                         <td>{item.imageId}</td>
                         <td>{item.imageName}</td>
                         <td>
-                            <Button variant="primary" onClick={() => handleEdit(item.imageId)}>
-                              Edit
-                            </Button>
+                            <Link to={`/edit`}>
+                                <Button variant="primary">Edit</Button>
+                            </Link>
                         </td>
                         <td>
                             <Button variant="danger" onClick={() => handleDelete(item.imageId)}>

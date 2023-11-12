@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Container, Form, Button, Image } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 const EditImage: React.FC = () => {
   const [newImage, setNewImage] = useState<File | null>(null);
@@ -33,8 +34,8 @@ const EditImage: React.FC = () => {
   };
 
   const handleCancel = () => {
-    // Navigasi kembali ke halaman "manage karya"
-    window.location.href = '/manage';
+    // kembali ke halaman manage karya dengan SPA
+    
   };
 
   return (
@@ -62,18 +63,20 @@ const EditImage: React.FC = () => {
             </Form.Group>
             
             <div className='d-flex justify-content-center'>
-              <Button 
-                  className='mt-5 me-3 border border-white bg-transparent'
-                  onClick={handleCancel}
-                  style={{ transition: 'color 0.3s ease' }}
-                  onMouseOver={(e) => {
-                      e.currentTarget.style.color = '#dc3545'; // Ganti dengan warna teks yang diinginkan
-                  }}
-                  onMouseOut={(e) => {
-                      e.currentTarget.style.color = '#fff'; // Ganti dengan warna teks default
-                  }}
-                  >Cancel
-              </Button>
+                <Link to='/manage'>
+                    <Button 
+                        className='mt-5 me-3 border border-white bg-transparent'
+                        onClick={handleCancel}
+                        style={{ transition: 'color 0.3s ease' }}
+                        onMouseOver={(e) => {
+                            e.currentTarget.style.color = '#dc3545'; // Ganti dengan warna teks yang diinginkan
+                        }}
+                        onMouseOut={(e) => {
+                            e.currentTarget.style.color = '#fff'; // Ganti dengan warna teks default
+                        }}>
+                        Cancel
+                    </Button>
+                </Link>
               <Button className='mt-5 ms-3' variant="success" onClick={handleDone}>
                 Done
               </Button>

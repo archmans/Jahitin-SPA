@@ -23,13 +23,13 @@ const NavbarComponent: React.FC = () => {
                     </Container>
                     <Nav.Link className="text-white fw-bold border border-white border-2 rounded-2 px-4 py-2 ms-4" href="#link"
                         style={{
-                            transition: 'background 0.3s ease',
+                              transition: 'background 0.3s ease',
                           }}
                           onMouseOver={(e) => {
-                            e.currentTarget.style.background = '#dc3545'; // Ganti dengan warna merah atau nilai warna yang diinginkan
+                              e.currentTarget.style.background = '#dc3545'; // Ganti dengan warna merah atau nilai warna yang diinginkan
                           }}
                           onMouseOut={(e) => {
-                            e.currentTarget.style.background = 'transparent';
+                              e.currentTarget.style.background = 'transparent';
                           }}
                     >Logout</Nav.Link>
                 </Nav>
