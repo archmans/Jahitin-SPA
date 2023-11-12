@@ -20,7 +20,7 @@ const SubsManagePage: React.FC = () => {
     return (
         <Container className="ms-auto d-flex flex-column justify-content-center align-items-center">
             <h1 className='py-5 fw-bold text-white'>Subscription Requests</h1>
-            <Table striped hover variant='dark'>
+            <Table striped hover variant='dark' style={{ lineHeight: '3' }}>
                 <thead>
                     <tr>
                         <th>No</th>
