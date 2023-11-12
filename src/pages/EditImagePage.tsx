@@ -29,13 +29,11 @@ const EditImage: React.FC = () => {
     // Reset form after updating image
     setNewImage(null);
     setNewImageName('');
-    // Navigasi kembali ke halaman "manage karya"
-    window.location.href = '/manage';
   };
 
   const handleCancel = () => {
     // kembali ke halaman manage karya dengan SPA
-    
+
   };
 
   return (
