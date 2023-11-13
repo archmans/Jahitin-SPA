@@ -19,11 +19,12 @@ const AddImagePage: React.FC = () => {
   };
 
   const handleAddImage = async () => {
+    const idUser = localStorage.getItem('idUser');
     try {
       const formData = new FormData();
       formData.append('image', image as File);
       formData.append('imageName', imageName);
-      const response = await axios.post('http://localhost:4000/manage', formData, {
+      const response = await axios.post(`http://localhost:4000/manage/${idUser}`, formData, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         }
