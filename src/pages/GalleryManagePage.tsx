@@ -5,7 +5,7 @@ import DeleteModal from '../components/DeleteModal';
 import axios from 'axios';
 
 const GalleryManagePage: React.FC = () => {
-    const [galleryData, setGalleryData] = useState<string[][]>([]);
+    const [galleryData, setGalleryData] = useState<{ imageID: string; imageName: string }[]>([]);
 
     useEffect(() => {
         fetchGalleryData();
@@ -13,22 +13,18 @@ const GalleryManagePage: React.FC = () => {
 
     const fetchGalleryData = async () => {
         try {
-            const response = await axios.get('http://localhost:4000/manage', {
+            const idUser = localStorage.getItem('idUser');
+            const response = await axios.get(`http://localhost:4000/manage/${idUser}`, {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem('token')}`,
                 }
             });
-            const formattedData = [];
-            for (let i = 0; i < response.data.data.length; i++) {
-                const item = response.data.data[i];
-                formattedData.push([item.imageID, item.imageName]);
-            }
-            setGalleryData(formattedData);
+            const formatedData = response.data.data.data;
+            setGalleryData(formatedData);
         } catch (error) {
             console.error("Error fetching gallery data: ", error);
         }
     };
-    console.log(galleryData);
     const [modalShow, setModalShow] = React.useState(false);
 
     return (
@@ -46,10 +42,10 @@ const GalleryManagePage: React.FC = () => {
                 </thead>
                 <tbody>
                     {galleryData.map((item, index) => (
-                    <tr key={item[0]}>
+                    <tr key={index}>
                         <td>{index + 1}</td>
-                        <td>{item[0]}</td>
-                        <td>{item[1]}</td>
+                        <td>{item.imageID}</td>
+                        <td>{item.imageName}</td>
                         <td>
                             <Link to={`/edit`}>
                                 <Button variant="primary">Edit</Button>
