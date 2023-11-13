@@ -1,23 +1,35 @@
 import React, { useState } from 'react';
 import { Container, Form, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import axios, { AxiosResponse } from 'axios';
 
 const LoginPage: React.FC = () => {
-  const [username, setUsername] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
+const [username, setUsername] = useState<string>('');
+const [password, setPassword] = useState<string>('');
 
-  const handleLogin = (e: React.FormEvent) => {
+const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Proses autentikasi atau tindakan setelah login
-    console.log('Login dengan:', username, password);
-  };
+    try {
+        const response: AxiosResponse<{ token: string }> = await axios.post<{ token: string }>('http://localhost:4000/login', {
+            username,
+            password,
+        });
+        console.log("Success: ", response.data);
+        localStorage.setItem('token', response.data.token);
+        if (response.data.token) {
+            window.location.href = '/manage';
+        }
+    } catch (error) {
+        console.error("Error login: ", error);
+    }
+};
 
-  return (
+return (
     <Container fluid className="ms-auto d-flex justify-content-center align-items-center" style={{ minHeight: '100vh' }}>
         <Container className="d-flex flex-column justify-content-center rounded-4 shadow" style={{ height: '550px', width: '450px', backgroundColor: '#121212' }}>
             <Container className="d-flex flex-column align-items-center">
                 <img
-                    src="../../public/logo_premium.png"
+                    src="/logo_premium.png"
                     height="120"
                     className="d-inline-block mb-4"
                     alt="logo jahitin"
@@ -90,7 +102,7 @@ const LoginPage: React.FC = () => {
             </Container>
         </Container>
     </Container>
-  );
+);
 };
 
 export default LoginPage;
