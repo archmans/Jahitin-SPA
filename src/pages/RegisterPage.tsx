@@ -7,18 +7,32 @@ const RegisterPage: React.FC = () => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
 
-  const handleRegister = (e: React.FormEvent) => {
-    e.preventDefault();
-    // Proses registrasi atau tindakan setelah register
-    console.log('Register dengan:', username, email, password);
-  };
+const handleRegister = async (e: React.FormEvent) => {
+  e.preventDefault();
+  try {
+    const response = await fetch('http://localhost:4000/register', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username, email, password }),
+    });
+
+    if (!response.ok) {
+      throw new Error(response.statusText);
+    }
+    const data = await response.json();
+    console.log('Success:', data);
+  } catch (error) {
+    console.error('Error:', error);
+  }
+};
+
 
   return (
     <Container className="ms-auto d-flex justify-content-center align-items-center" style={{ minHeight: '100vh' }}>
       <Container className="d-flex flex-column justify-content-center rounded-4 shadow" style={{ height: '620px', width: '450px', backgroundColor: '#121212' }}>
         <Container className="d-flex flex-column align-items-center">
           <img
-            src="../../public/logo_premium.png"
+            src="/logo_premium.png"
             height="120"
             className="d-inline-block mb-4"
             alt="logo jahitin premium"
