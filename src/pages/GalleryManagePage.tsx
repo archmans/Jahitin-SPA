@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Table, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import DeleteModal from '../components/DeleteModal';
 
 const GalleryManagePage: React.FC = () => {
     // Dummy data for demonstration
@@ -28,6 +29,9 @@ const GalleryManagePage: React.FC = () => {
         console.log(`Deleting image with ID: ${imageId}`);
     };
 
+    const [modalShow, setModalShow] = React.useState(false);
+
+
     return (
         <Container className="ms-auto d-flex flex-column justify-content-center align-items-center">
             <h1 className='py-5 fw-bold text-white'>Gallery Management</h1>
@@ -53,9 +57,13 @@ const GalleryManagePage: React.FC = () => {
                             </Link>
                         </td>
                         <td>
-                            <Button variant="danger" onClick={() => handleDelete(item.imageId)}>
-                              Delete
+                        <>
+                            <Button variant="danger" onClick={() => setModalShow(true)}>
+                                Delete
                             </Button>
+
+                            <DeleteModal show={modalShow} onHide={() => setModalShow(false)} />
+                            </>
                         </td>
                     </tr>
                     ))}
