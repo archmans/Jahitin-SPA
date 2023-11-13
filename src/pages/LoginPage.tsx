@@ -10,12 +10,13 @@ const [password, setPassword] = useState<string>('');
 const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-        const response: AxiosResponse<{ token: string }> = await axios.post<{ token: string }>('http://localhost:4000/login', {
+        const response: AxiosResponse<{ token: string, idUser:string }> = await axios.post<{ token: string, idUser:string }>('http://localhost:4000/login', {
             username,
             password,
         });
         console.log("Success: ", response.data);
         localStorage.setItem('token', response.data.token);
+        localStorage.setItem('idUser', response.data.idUser);
         if (response.data.token) {
             window.location.href = '/manage';
         }
