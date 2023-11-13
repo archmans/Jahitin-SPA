@@ -1,7 +1,9 @@
 import React from 'react'
-import { Navbar, Container, Nav } from 'react-bootstrap'
+import { Navbar, Container, Nav, Button } from 'react-bootstrap'
+import LogoutModal from './LogoutModal'
 
 const NavbarComponent: React.FC = () => {
+    const [modalShow, setModalShow] = React.useState(false);
   return (
     <div>
         <Navbar expand="lg" style={{backgroundColor: '#121212'}}>
@@ -21,17 +23,22 @@ const NavbarComponent: React.FC = () => {
                         <Navbar.Text className="text-white fw-bold fs-3 py-0" >hi, Tifa!</Navbar.Text>
                         <Navbar.Text className="text-white py-0" >Admin</Navbar.Text>
                     </Container>
-                    <Nav.Link className="text-white fw-bold border border-white border-2 rounded-2 px-4 py-2 ms-4" href="#link"
-                        style={{
-                              transition: 'background 0.3s ease',
-                          }}
-                          onMouseOver={(e) => {
-                              e.currentTarget.style.background = '#dc3545'; // Ganti dengan warna merah atau nilai warna yang diinginkan
-                          }}
-                          onMouseOut={(e) => {
-                              e.currentTarget.style.background = 'transparent';
-                          }}
-                    >Logout</Nav.Link>
+                    <Button 
+                    className="text-white fw-bold border border-white border-2 rounded-2 px-4 py-2 ms-4 bg-transparent" 
+                    style={{
+                        transition: 'background 0.3s ease',
+                    }}
+                    onMouseOver={(e) => {
+                        e.currentTarget.style.background = '#dc3545';
+                    }}
+                    onMouseOut={(e) => {
+                        e.currentTarget.style.background = 'transparent';
+                    }}
+                    onClick={() => setModalShow(true)}
+                    >
+                        Logout
+                    </Button>
+                    <LogoutModal show={modalShow} onHide={() => setModalShow(false)} />
                 </Nav>
                 </Navbar.Collapse>
             </Container>
