@@ -8,7 +8,7 @@ const EditImage: React.FC = () => {
 
   // Dummy data for existing image
   const existingImageName = 'Gambar 1';
-  const existingImagePath = '../../public/logo_premium.png';
+  const existingImagePath = '/logo_premium.png';
 
   const handleNewImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {

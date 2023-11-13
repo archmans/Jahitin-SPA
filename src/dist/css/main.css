@@ -8,7 +8,7 @@
 
 body {
     min-height: 100vh;
-    background-image: url('../../../public/background_premium.png');
+    background-image: url('background_premium.png');
     background-attachment: fixed;
     background-size: cover;
     background-position: center;

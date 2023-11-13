@@ -8,7 +8,7 @@ const NavbarComponent: React.FC = () => {
             <Container>
                 <Navbar.Brand href="#home">
                     <img
-                        src="../../public/logo_premium.png"
+                        src="/logo_premium.png"
                         height="80"
                         className="d-inline-block align-top"
                         alt="logo jahitin"
