@@ -23,9 +23,6 @@ const DeleteModal: React.FC<ModalsProps> = (props) => {
           },
         }
       );
-  
-      console.log(response);
-  
       if (response.status === 200) {
         console.log("Logout success");
         localStorage.removeItem("token");

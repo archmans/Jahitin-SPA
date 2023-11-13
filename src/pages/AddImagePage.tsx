@@ -28,7 +28,6 @@ const AddImagePage: React.FC = () => {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         }
       });
-      console.log(response);
       if (response.status === 201) {
         console.log('Add image success');
         setImage(null);
