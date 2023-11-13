@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Container, Form, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 const AddImagePage: React.FC = () => {
   const [image, setImage] = useState<File | null>(null);
@@ -17,21 +18,30 @@ const AddImagePage: React.FC = () => {
     setImageName(e.target.value);
   };
 
-  const handleAddImage = () => {
-    // Logic to handle adding image to the database
-    // Replace the following with actual fetch logic when you have a backend
-    // For example: addImageToDatabase(image, imageName);
-    console.log(`Adding image: ${imageName}`);
-    // Reset form after adding image
-    setImage(null);
-    setImageName('');
-    // Navigasi kembali ke halaman "manage karya"
-    window.location.href = '/manage';
+  const handleAddImage = async () => {
+    try {
+      const formData = new FormData();
+      formData.append('image', image as File);
+      formData.append('imageName', imageName);
+      const response = await axios.post('http://localhost:4000/manage', formData, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        }
+      });
+      console.log(response);
+      if (response.status === 201) {
+        console.log('Add image success');
+        setImage(null);
+        setImageName('');
+        window.location.href = '/manage';
+      }
+    } catch (error) {
+      console.error('Error Add Image:', error);
+    }
   };
 
   const handleCancel = () => {
     // kembali ke halaman manage karya dengan SPA
-    
   };
 
   return (
@@ -55,10 +65,10 @@ const AddImagePage: React.FC = () => {
                         onClick={handleCancel}
                         style={{ transition: 'color 0.3s ease' }}
                         onMouseOver={(e) => {
-                            e.currentTarget.style.color = '#dc3545'; // Ganti dengan warna teks yang diinginkan
+                            e.currentTarget.style.color = '#dc3545';
                         }}
                         onMouseOut={(e) => {
-                            e.currentTarget.style.color = '#fff'; // Ganti dengan warna teks default
+                            e.currentTarget.style.color = '#fff';
                         }}>
                         Cancel
                     </Button>

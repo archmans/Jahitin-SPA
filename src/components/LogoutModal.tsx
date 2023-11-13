@@ -1,6 +1,7 @@
 import React from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
+import axios from "axios";
 
 interface ModalsProps {
   show: boolean;
@@ -12,26 +13,29 @@ interface ModalsProps {
 
 const DeleteModal: React.FC<ModalsProps> = (props) => {
   const handleLogout = async () => {
-    // try {
-    //   // Gantilah URL dengan URL backend Anda yang menangani penghapusan data
-    //   const response = await fetch('https://example.com/delete', {
-    //     method: 'DELETE',
-    //     headers: {
-    //       'Content-Type': 'application/json',
-    //     },
-    //     // Gantilah dengan data yang diperlukan untuk mengidentifikasi file yang akan dihapus
-    //     body: JSON.stringify({ fileId: props.fileId }),
-    //   });
-    //   if (response.ok) {
-    //     // Hapus modal setelah penghapusan berhasil
-    //     props.onHide();
-    //   } else {
-    //     // Handle kesalahan atau tampilkan pesan kesalahan
-    //     console.error('Failed to delete file');
-    //   }
-    // } catch (error) {
-    //   console.error('Error:', error);
-    // }
+    try {
+      const response = await axios.post(
+        "http://localhost:4000/logout",
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+  
+      console.log(response);
+  
+      if (response.status === 200) {
+        console.log("Logout success");
+        localStorage.removeItem("token");
+        console.log("Token removed");
+        props.onHide();
+        window.location.href = "/";
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
   };
 
   const handleCancel = () => {
