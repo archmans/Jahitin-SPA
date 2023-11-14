@@ -19,7 +19,7 @@ const EditImage: React.FC = () => {
           },
         });
         setData(response.data.data.data[0]);
-        console.log('response:', response.data.data.data);
+        // console.log('response:', response.data.data.data);
       } catch (error) {
         console.error("Error fetching image data: ", error);
       }
@@ -61,7 +61,6 @@ const EditImage: React.FC = () => {
           },
         });
         if (response.status === 200) {
-          console.log('Edit image success');
           setNewImage(null);
           setNewImageName('');
           window.location.href = '/manage';

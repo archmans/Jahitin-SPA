@@ -30,7 +30,6 @@ const AddImagePage: React.FC = () => {
         }
       });
       if (response.status === 201) {
-        console.log('Add image success');
         setImage(null);
         setImageName('');
         window.location.href = '/manage';

@@ -14,7 +14,6 @@ const handleLogin = async (e: React.FormEvent) => {
             username,
             password,
         });
-        console.log("Success: ", response.data);
         localStorage.setItem('token', response.data.token);
         localStorage.setItem('idUser', response.data.idUser);
         if (response.data.token) {

@@ -30,7 +30,6 @@ const GalleryManagePage: React.FC = () => {
 
     const handleDelete = (imageid: string) => {
         setselectedimageid(imageid);
-        console.log(imageid);
     }
 
     return (

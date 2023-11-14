@@ -12,12 +12,11 @@ interface ModalsProps {
 const DeleteModal: React.FC<ModalsProps> = (props) => {
     const handleDelete = async () => {
         try {
-            const response = await axios.delete(`http://localhost:4000/manage/${props.imageid}`, {
+            await axios.delete(`http://localhost:4000/manage/${props.imageid}`, {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem('token')}`,
                 }
             });
-            console.log(response);
             props.onHide();
             window.location.reload();
         } catch (error) {

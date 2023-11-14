@@ -19,7 +19,6 @@ const App: React.FC = () => {
   useEffect(() => {
     const getTokenAndVerify = async () => {
       const token = localStorage.getItem('token');
-      console.log('Token:', token);
 
       const isValid = await verifyToken(token);
 
