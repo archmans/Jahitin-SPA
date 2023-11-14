@@ -7,6 +7,8 @@ import axios from 'axios';
 const GalleryManagePage: React.FC = () => {
     const [galleryData, setGalleryData] = useState<{ imageID: string; imageName: string }[]>([]);
 
+    const [selectedimageid, setselectedimageid] = useState<string | null>(null);
+
     useEffect(() => {
         fetchGalleryData();
     }, []);
@@ -25,7 +27,11 @@ const GalleryManagePage: React.FC = () => {
             console.error("Error fetching gallery data: ", error);
         }
     };
-    const [modalShow, setModalShow] = React.useState(false);
+
+    const handleDelete = (imageid: string) => {
+        setselectedimageid(imageid);
+        console.log(imageid);
+    }
 
     return (
         <Container className="ms-auto d-flex flex-column justify-content-center align-items-center">
@@ -53,10 +59,14 @@ const GalleryManagePage: React.FC = () => {
                         </td>
                         <td>
                         <>
-                            <Button variant="danger" onClick={() => setModalShow(true)}>
+                            <Button variant="danger" onClick={() => handleDelete(item.imageID)}>
                                 Delete
                             </Button>
-                            <DeleteModal show={modalShow} onHide={() => setModalShow(false)} />
+                            <DeleteModal
+                                show={selectedimageid === item.imageID}
+                                onHide={() => setselectedimageid(null)}
+                                imageid={item.imageID}
+                                />
                             </>
                         </td>
                     </tr>
@@ -71,16 +81,3 @@ const GalleryManagePage: React.FC = () => {
 };
 
 export default GalleryManagePage;
-
-
-    // const handleEdit = (imageId: string) => {
-    //     // Logic to handle edit, e.g., redirect to edit page
-    //     console.log(`Editing image with ID: ${imageId}`);
-    //     // Navigasi ke halaman edit dengan SPA
-    // };
-
-    // const handleDelete = (imageId: string) => {
-    //     // Logic to handle delete
-    //     setGalleryData((prevData) => prevData.filter((item) => item.imageId !== imageId));
-    //     console.log(`Deleting image with ID: ${imageId}`);
-    // };

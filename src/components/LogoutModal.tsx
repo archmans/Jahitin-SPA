@@ -6,9 +6,6 @@ import axios from "axios";
 interface ModalsProps {
   show: boolean;
   onHide: () => void;
-  // Tambahkan tipe data untuk properti lain yang digunakan dalam komponen
-  // Contoh:
-  // fileId?: string;
 }
 
 const DeleteModal: React.FC<ModalsProps> = (props) => {

@@ -3,7 +3,7 @@ import { Navbar, Container, Nav, Button } from 'react-bootstrap'
 import LogoutModal from './LogoutModal'
 
 const NavbarComponent: React.FC = () => {
-    const [modalShow, setModalShow] = React.useState(false);
+    const [modalshow, setmodalshow] = React.useState(false);
   return (
     <div>
         <Navbar expand="lg" style={{backgroundColor: '#121212'}}>
@@ -34,17 +34,17 @@ const NavbarComponent: React.FC = () => {
                     onMouseOut={(e) => {
                         e.currentTarget.style.background = 'transparent';
                     }}
-                    onClick={() => setModalShow(true)}
+                    onClick={() => setmodalshow(true)}
                     >
                         Logout
                     </Button>
-                    <LogoutModal show={modalShow} onHide={() => setModalShow(false)} />
+                    <LogoutModal show={modalshow} onHide={() => setmodalshow(false)} />
                 </Nav>
                 </Navbar.Collapse>
             </Container>
         </Navbar>
     </div>
-  )
+    )
 }
 
 export default NavbarComponent
