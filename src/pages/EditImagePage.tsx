@@ -1,14 +1,38 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Container, Form, Button, Image } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
+import axios from 'axios';
 
 const EditImage: React.FC = () => {
   const [newImage, setNewImage] = useState<File | null>(null);
   const [newImageName, setNewImageName] = useState<string>('');
+  const [rowData, setData] = useState<{ imageID: string; imageName: string; imageNameExt: string; } | undefined>(undefined);
 
-  // Dummy data for existing image
-  const existingImageName = 'Gambar 1';
-  const existingImagePath = '/logo_premium.png';
+  const { imageID } = useParams<{ imageID: string }>();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(`http://localhost:4000/manage/edit/${imageID}`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
+          },
+        });
+        setData(response.data.data.data[0]);
+        console.log('response:', response.data.data.data);
+      } catch (error) {
+        console.error("Error fetching image data: ", error);
+      }
+    };
+
+    fetchData();
+  }, [imageID]);
+
+
+
+  const existingImageName = rowData?.imageName;
+  const imageNameExt = rowData?.imageNameExt;
+  const existingImagePath = existingImageName && imageNameExt ? `http://localhost:4000/${imageNameExt}` : '';
 
   const handleNewImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
@@ -21,14 +45,32 @@ const EditImage: React.FC = () => {
     setNewImageName(e.target.value);
   };
 
-  const handleDone = () => {
-    // Logic to handle updating image in the database
-    // Replace the following with actual fetch logic when you have a backend
-    // For example: updateImageInDatabase(existingImageName, newImageName, newImage);
-    console.log(`Updating image: ${existingImageName} -> ${newImageName}`);
-    // Reset form after updating image
-    setNewImage(null);
-    setNewImageName('');
+  const handleDone = async () => {
+    try {
+      const formData = new FormData();
+      if (newImage || newImageName) {
+        if (newImage) {
+          formData.append('image', newImage as File);
+        }
+        if (newImageName) {
+          formData.append('imageName', newImageName);
+        }
+        const response = await axios.patch(`http://localhost:4000/manage/${imageID}`, formData, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
+          },
+        });
+        if (response.status === 200) {
+          console.log('Edit image success');
+          setNewImage(null);
+          setNewImageName('');
+          window.location.href = '/manage';
+        }
+      }
+
+    } catch (error) {
+      console.error("Error adding image: ", error);
+    }
   };
 
   const handleCancel = () => {

@@ -48,9 +48,7 @@ const App: React.FC = () => {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/add" element={<AddImagePage />} />
-        {/* <Route path="/edit/:id" element={<EditImagePage />} /> */}
-        <Route path="/edit" element={<EditImagePage />} />
-
+        <Route path="/edit/:imageID" element={<EditImagePage />} />
         <Route path="/manage" element={<GalleryManagePage />} />
       </Routes> 
     </div>

@@ -47,7 +47,7 @@ const GalleryManagePage: React.FC = () => {
                         <td>{item.imageID}</td>
                         <td>{item.imageName}</td>
                         <td>
-                            <Link to={`/edit`}>
+                            <Link to={`/edit/${item.imageID}`}>
                                 <Button variant="primary">Edit</Button>
                             </Link>
                         </td>
