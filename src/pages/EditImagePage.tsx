@@ -19,7 +19,6 @@ const EditImage: React.FC = () => {
           },
         });
         setData(response.data.data.data[0]);
-        // console.log('response:', response.data.data.data);
       } catch (error) {
         console.error("Error fetching image data: ", error);
       }
