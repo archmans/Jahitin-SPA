@@ -1,18 +1,37 @@
 import { Container, Table, Button } from 'react-bootstrap';
+import React, { useEffect } from 'react';
+import axios from 'axios';
 
 const SubsManagePage: React.FC = () => {
-    const data = [
-        { id: 1, userId: 'user123', username: 'john_doe', status: 'Pending' },
-        { id: 2, userId: 'user456', username: 'jane_smith', status: 'Approved' },
-        { id: 3, userId: 'user789', username: 'bob_jackson', status: 'Rejected' },
-    ];
+    const [data, setData] = React.useState<{ user_id: string; status: string }[]>([]);
+    useEffect(() => {
+        fetchSubscriptionData();
+    }, []);
 
-    const handleAccept = (id: number) => {
+    const fetchSubscriptionData = async () => {
+        try {
+            const response = await axios.get('http://localhost:4000/subscription/get', {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('token')}`,
+                },
+            });
+            const formattedData = response.data.map((item: any) => ({
+                user_id: item.user_id[0],
+                status: item.status[0],
+            }));
+            setData(formattedData);
+        } catch (error) {
+            console.error('Error fetching subscription data: ', error);
+        }
+
+
+    }
+    const handleAccept = (id: string) => {
         // Handle accept logic here
         console.log(`Accept request with ID: ${id}`);
     };
 
-    const handleReject = (id: number) => {
+    const handleReject = (id: string) => {
         // Handle reject logic here
         console.log(`Reject request with ID: ${id}`);
     };
@@ -25,7 +44,6 @@ const SubsManagePage: React.FC = () => {
                     <tr>
                         <th>No</th>
                         <th>User ID</th>
-                        <th>Tailor</th>
                         <th>Status</th>
                     </tr>
                 </thead>
@@ -33,20 +51,19 @@ const SubsManagePage: React.FC = () => {
                     {data.map((row, index) => (
                         <tr key={index}>
                             <td>{index + 1}</td>
-                            <td>{row.userId}</td>
-                            <td>{row.username}</td>
+                            <td>{row.user_id}</td>
                             <td>
-                                {row.status === 'Pending' && (
+                                {row.status === 'PENDING' && (
                                     <>
-                                        <Button className="me-2" variant="success" onClick={() => handleAccept(row.id)}>
+                                        <Button className="me-2" variant="success" onClick={() => handleAccept(row.user_id)}>
                                             Accept
                                         </Button>
-                                        <Button className="mx-2" variant="danger" onClick={() => handleReject(row.id)}>
+                                        <Button className="mx-2" variant="danger" onClick={() => handleReject(row.user_id)}>
                                             Reject
                                         </Button>
                                     </>
                                 )}
-                                {row.status !== 'Pending' && row.status}
+                                {row.status !== 'PENDING' && row.status}
                             </td>
                         </tr>
                     ))}
