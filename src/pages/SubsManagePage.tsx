@@ -26,9 +26,19 @@ const SubsManagePage: React.FC = () => {
 
 
     }
-    const handleAccept = (id: string) => {
-        // Handle accept logic here
-        console.log(`Accept request with ID: ${id}`);
+    const handleAccept = async (id: string) => {
+        console.log(id);
+        try {
+            await axios.patch(`http://localhost:4000/subscription/acc/${id}`, {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('token')}`,
+                },
+            });
+            console.log(`Accept request FE with ID: ${id}`);
+            fetchSubscriptionData();
+        } catch (error) {
+            console.error('Error accepting subscription: ', error);
+        }
     };
 
     const handleReject = (id: string) => {
